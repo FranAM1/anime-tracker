@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import SearchIcon from '@/components/icons/SearchIcon.vue'
+
+const inputSearch = ref('')
+
 </script>
 
 <template>
@@ -12,7 +16,9 @@ import SearchIcon from '@/components/icons/SearchIcon.vue'
         class="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
         type="text"
         id="search"
-        placeholder="Search anime.." 
+        placeholder="Search anime.."
+        v-model="inputSearch"
+        @input="$emit('inputSearch', inputSearch)"
         /> 
     </div>
 </template>
