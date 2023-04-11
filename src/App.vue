@@ -2,11 +2,12 @@
 import { ref, onMounted, onUnmounted} from 'vue'
 import Header from './components/Header.vue'
 import SearchBar from './components/SearchBar.vue'
-import type { Anime, Datum } from './types/anime';
+import type { Anime, Datum, MyAnime } from './types/anime';
 
 const api_url = 'https://api.jikan.moe/v4/'
 const all_anime = ref<Datum[]>([])
 const anime_list = ref<Datum[]>([])
+const my_list = ref<MyAnime[]>([])
 const count_page = ref(1)
 
 onMounted(async () => {
@@ -32,12 +33,51 @@ async function getAnimes() {
   count_page.value++
   const response = await fetch(`${api_url}anime?page=${count_page.value}`)
   const data = await response.json()
-  all_anime.value.push(data.data)
+  
+  data.data.forEach((anime: Datum) => {
+    all_anime.value.push(anime)
+  })
 }
 
-function searchAnime(search: string) {
-  if(search.length == 0) return anime_list.value = all_anime.value
-  anime_list.value = all_anime.value.filter((anime: any) => anime.title.toLowerCase().includes(search.toLowerCase()))
+async function searchAnime(search: string) {
+  count_page.value = 1
+  const response = await fetch(`${api_url}anime?q=${search}`)
+  const data = await response.json()
+  anime_list.value = data.data
+}
+
+function addAnime (anime: Datum) {
+  if(!anime.episodes) return 
+
+  const isAnimeInList = my_list.value.some((item) => item.id === anime.mal_id)
+  
+  if(isAnimeInList) return
+
+  my_list.value.push({
+    id: anime.mal_id,
+    title: anime.title,
+    image: anime.images.jpg.image_url,
+    total_episodes: anime.episodes,
+    watched_episodes: 0,
+  })
+
+
+}
+
+function removeAnime (id: number) {
+  my_list.value = my_list.value.filter((anime) => anime.id !== id)
+}
+
+function increaseEpisode (anime: MyAnime) {
+  if(anime.total_episodes && anime.watched_episodes < anime.total_episodes) {
+    anime.watched_episodes++
+  }
+}
+
+function decreaseEpisode (anime: MyAnime) {
+  if(anime.watched_episodes > 0) {
+    anime.watched_episodes--
+  }
 }
 
 </script>
@@ -45,12 +85,27 @@ function searchAnime(search: string) {
 <template>
   <Header/>
   <main class="text-white p-5 flex justify-center items-center flex-col gap-8">
+    <div class="flex flex-col justify-center items-center gap-4">
+      <h1 class="text-4xl font-bold">My List</h1>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="flex flex-col gap-2 items-center" v-for="anime in my_list">
+          <h2>{{ anime.title }}</h2>
+          <img class="max-h-80 rounded-xl" :src="anime.image">
+          <div class="flex gap-2 justify-center items-center">
+            <button class="bg-blue-500 rounded-lg px-4 py-2 transition-colors duration-300 hover:bg-blue-800" @click="decreaseEpisode(anime)">-</button>
+            <h2>{{ anime.watched_episodes }} / {{ anime.total_episodes }}</h2>
+            <button class="bg-blue-500 rounded-lg px-4 py-2  transition-colors duration-300 hover:bg-blue-800" @click="increaseEpisode(anime)">+</button>
+          </div>
+          <button class="bg-blue-500 rounded-lg px-4 py-2 transition-colors duration-300 hover:bg-blue-800" @click="removeAnime(anime.id)">Remove</button>
+        </div>
+      </div>
+    </div>
     <SearchBar @input-search="searchAnime"/>
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col gap-2 items-center" v-for="anime in anime_list">
         <h2>{{ anime.title }}</h2>
         <img class="max-h-80 rounded-xl" :src="anime.images.jpg.image_url">
-
+        <button class="bg-blue-500 rounded-lg px-4 py-2 m-2 mb-4 transition-colors duration-300 hover:bg-blue-800" @click="addAnime(anime)">Add to my list</button>
       </div>
     </div>
     

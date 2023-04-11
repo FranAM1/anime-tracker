@@ -14,6 +14,14 @@ export type Anime = {
     meta:       Meta;
 }
 
+export type MyAnime = {
+    id: number;
+    title: string;
+    image: string;
+    total_episodes: number | null;
+    watched_episodes: number;
+}
+
 export type Datum = {
     mal_id:          number;
     url:             string;
