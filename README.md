@@ -2,7 +2,7 @@
 Aplicación para buscar animes y gestionarlos en una lista de seguimiento donde puedes sumar y restar los episodios vistos.
 
 ![anime-tracker](./public/imagenEjemplo.png)
-![anime-tracker](./public/ejemploBuscador.png)
+![anime-tracker](./public/ejemploBuscador.PNG)
 
 ## Instalación
 
