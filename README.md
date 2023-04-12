@@ -1,40 +1,22 @@
-# anime-tracker
+# anime-tracker 
+Aplicación para buscar animes y gestionarlos en una lista de seguimiento donde puedes sumar y restar los episodios vistos.
 
-This template should help get you started developing with Vue 3 in Vite.
 
-## Recommended IDE Setup
+## Instalación
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+1. Clona el repositorio
+2. Moverse a la carpeta del repositorio
+3. Usar el comando ```npm install```
+4. Usar el comando ```npm run dev``` para poner en funcionamiento el bot
+5. Disfrutar 🤯
 
-## Type Support for `.vue` Imports in TS
+## Funcionalidades
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+- Buscar animes
+- Añadir animes a la lista de seguimiento
+- Sumar capitulos
+- Restar capitulos
+- Eliminar animes de la lista de seguimiento
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+## Jikan API
+Para obtener los datos de los animes he usado la API de Jikan, puedes ver la documentación [aquí](https://docs.api.jikan.moe/)
