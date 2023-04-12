@@ -19,6 +19,8 @@ onMounted(async () => {
   const data = await response.json()
   
   anime_list.value = data.data
+
+  my_list.value = JSON.parse(localStorage.getItem('my_list') || '[]')
 })
 
 onUnmounted(() => {
@@ -65,23 +67,29 @@ function addAnime (anime: Datum) {
     watched_episodes: 0,
   })
 
-
+  localStorage.setItem('my_list', JSON.stringify(my_list.value))
 }
 
 function removeAnime (id: number) {
   my_list.value = my_list.value.filter((anime) => anime.id !== id)
+
+  localStorage.setItem('my_list', JSON.stringify(my_list.value))
 }
 
 function increaseEpisode (anime: MyAnime) {
   if(anime.total_episodes && anime.watched_episodes < anime.total_episodes) {
     anime.watched_episodes++
   }
+
+  localStorage.setItem('my_list', JSON.stringify(my_list.value))
 }
 
 function decreaseEpisode (anime: MyAnime) {
   if(anime.watched_episodes > 0) {
     anime.watched_episodes--
   }
+  
+  localStorage.setItem('my_list', JSON.stringify(my_list.value))
 }
 
 </script>
@@ -97,6 +105,7 @@ function decreaseEpisode (anime: MyAnime) {
         </div>
       </div>
     </div>
+    <h1 class="text-4xl font-bold mt-8">Searcher</h1>
     <SearchBar @input-search="searchAnime"/>
     <div class="grid grid-cols-3 gap-4">
       <h3 class="col-span-3" v-if="!anime_list.length">NO ANIME FOUNDS</h3>
