@@ -7,17 +7,17 @@ import SearchBar from './components/SearchBar.vue'
 import type { Anime, Datum, MyAnime } from './types/anime';
 
 const api_url = 'https://api.jikan.moe/v4/'
-const all_anime = ref<Datum[]>([])
 const anime_list = ref<Datum[]>([])
 const my_list = ref<MyAnime[]>([])
+const query_search = ref('')
 const count_page = ref(1)
 
 onMounted(async () => {
   window.addEventListener('scroll', handleScroll)
 
-  const response = await fetch(`${api_url}anime`)
-  const data = await response.json() as Anime
-  all_anime.value = data.data
+  const response = await fetch(`${api_url}anime?q=${query_search.value}&&page=${count_page.value}`)
+  const data = await response.json()
+  
   anime_list.value = data.data
 })
 
@@ -28,21 +28,23 @@ onUnmounted(() => {
 function handleScroll() {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
     getAnimes()
+    console.log('bottom')
   }
 }
 
 async function getAnimes() {
   count_page.value++
-  const response = await fetch(`${api_url}anime?page=${count_page.value}`)
+  const response = await fetch(`${api_url}anime?q=${query_search.value}&&page=${count_page.value}`)
   const data = await response.json()
   
   data.data.forEach((anime: Datum) => {
-    all_anime.value.push(anime)
+    anime_list.value.push(anime)
   })
 }
 
 async function searchAnime(search: string) {
   count_page.value = 1
+  query_search.value = search
   const response = await fetch(`${api_url}anime?q=${search}`)
   const data = await response.json()
   anime_list.value = data.data
@@ -97,8 +99,10 @@ function decreaseEpisode (anime: MyAnime) {
     </div>
     <SearchBar @input-search="searchAnime"/>
     <div class="grid grid-cols-3 gap-4">
+      <h3 class="col-span-3" v-if="!anime_list.length">NO ANIME FOUNDS</h3>
       <div class="flex flex-col gap-2 items-center" v-for="anime in anime_list">
         <CardAnime :anime="anime" @addAnime="addAnime"/>
+        
       </div>
     </div>
   </main>
