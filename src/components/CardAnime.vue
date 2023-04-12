@@ -5,6 +5,10 @@ const props = defineProps<{
     anime: Datum
 }>()
 
+const emit = defineEmits([
+    'addAnime'
+])
+
 </script>
 <template>
     <h2>{{ anime.title }}</h2>

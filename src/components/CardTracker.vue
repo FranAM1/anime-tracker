@@ -5,6 +5,12 @@ const props = defineProps<{
     anime: MyAnime
 }>()
 
+const emit = defineEmits([
+    'decreaseEpisode', 
+    'increaseEpisode', 
+    'removeAnime'
+])
+
 </script>
 
 <template>

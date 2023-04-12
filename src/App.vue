@@ -101,7 +101,6 @@ function decreaseEpisode (anime: MyAnime) {
         <CardAnime :anime="anime" @addAnime="addAnime"/>
       </div>
     </div>
-    
   </main>
 </template>
 
