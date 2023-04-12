@@ -1,6 +1,8 @@
 # anime-tracker 
 Aplicación para buscar animes y gestionarlos en una lista de seguimiento donde puedes sumar y restar los episodios vistos.
 
+![anime-tracker](./public/imagenEjemplo.png)
+![anime-tracker](./public/ejemploBuscador.png)
 
 ## Instalación
 
@@ -17,6 +19,7 @@ Aplicación para buscar animes y gestionarlos en una lista de seguimiento donde 
 - Sumar capitulos
 - Restar capitulos
 - Eliminar animes de la lista de seguimiento
+- Scroll Infinito no optimizado💀
 
 ## Jikan API
 Para obtener los datos de los animes he usado la API de Jikan, puedes ver la documentación [aquí](https://docs.api.jikan.moe/)

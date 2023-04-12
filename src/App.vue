@@ -108,7 +108,7 @@ function decreaseEpisode (anime: MyAnime) {
     <h1 class="text-4xl font-bold mt-8">Searcher</h1>
     <SearchBar @input-search="searchAnime"/>
     <div class="grid grid-cols-3 gap-4">
-      <h3 class="col-span-3" v-if="!anime_list.length">NO ANIME FOUNDS</h3>
+      <h3 class="col-span-3" v-if="!anime_list.length">ANIME NOT FOUND</h3>
       <div class="flex flex-col gap-2 items-center" v-for="anime in anime_list">
         <CardAnime :anime="anime" @addAnime="addAnime"/>
         
