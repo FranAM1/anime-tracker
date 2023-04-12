@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
 import type { Datum } from '@/types/anime';
 
-const props = defineProps<{
-    anime: Datum
-}>()
+const props = defineProps({
+    anime: {
+        type: Object as PropType<Datum>,
+        required: true
+    }
+})
 
 const emit = defineEmits([
     'addAnime'

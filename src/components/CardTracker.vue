@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
 import type { MyAnime } from '@/types/anime';
 
-const props = defineProps<{
-    anime: MyAnime
-}>()
-
+const props = defineProps({
+    anime: {
+        type: Object as PropType<MyAnime>,
+        required: true
+    }
+})
 const emit = defineEmits([
     'decreaseEpisode', 
     'increaseEpisode', 
