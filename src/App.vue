@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted} from 'vue'
+import CardTracker from './components/CardTracker.vue'
+import CardAnime from './components/CardAnime.vue'
 import Header from './components/Header.vue'
 import SearchBar from './components/SearchBar.vue'
 import type { Anime, Datum, MyAnime } from './types/anime';
@@ -89,23 +91,14 @@ function decreaseEpisode (anime: MyAnime) {
       <h1 class="text-4xl font-bold">My List</h1>
       <div class="grid grid-cols-3 gap-4">
         <div class="flex flex-col gap-2 items-center" v-for="anime in my_list">
-          <h2>{{ anime.title }}</h2>
-          <img class="max-h-80 rounded-xl" :src="anime.image">
-          <div class="flex gap-2 justify-center items-center">
-            <button class="bg-blue-500 rounded-lg px-4 py-2 transition-colors duration-300 hover:bg-blue-800" @click="decreaseEpisode(anime)">-</button>
-            <h2>{{ anime.watched_episodes }} / {{ anime.total_episodes }}</h2>
-            <button class="bg-blue-500 rounded-lg px-4 py-2  transition-colors duration-300 hover:bg-blue-800" @click="increaseEpisode(anime)">+</button>
-          </div>
-          <button class="bg-blue-500 rounded-lg px-4 py-2 transition-colors duration-300 hover:bg-blue-800" @click="removeAnime(anime.id)">Remove</button>
+          <CardTracker :anime="anime" @removeAnime="removeAnime" @increaseEpisode="increaseEpisode" @decreaseEpisode="decreaseEpisode"/>
         </div>
       </div>
     </div>
     <SearchBar @input-search="searchAnime"/>
     <div class="grid grid-cols-3 gap-4">
       <div class="flex flex-col gap-2 items-center" v-for="anime in anime_list">
-        <h2>{{ anime.title }}</h2>
-        <img class="max-h-80 rounded-xl" :src="anime.images.jpg.image_url">
-        <button class="bg-blue-500 rounded-lg px-4 py-2 m-2 mb-4 transition-colors duration-300 hover:bg-blue-800" @click="addAnime(anime)">Add to my list</button>
+        <CardAnime :anime="anime" @addAnime="addAnime"/>
       </div>
     </div>
     
